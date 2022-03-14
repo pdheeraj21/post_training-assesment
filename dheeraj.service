@@ -1,0 +1,16 @@
+Approach to find out the why the application is not accessible{Via NodePort service (at port 8000)} for the application deployed using replica-set.
+
+1. Firstly we have to make sure that we are connecting to the service’s cluster IP from within the cluster.
+
+2. If we are trying to access it from the outside then we have to request <NodeIp>:<NodePort>.
+
+3. check whether the pod is in ready state by defining readiness probe as to know when a container is ready to start accepting traffic because a Pod is considered ready when all of its containers are ready.if the status does not show success then the pod won’t be part of the service.
+
+4. To confirm that a pod is part of the service, examine the corresponding Endpoints object with kubectl get endpoints.
+
+5. Check whether you’re connecting to the port exposed by the service and not the target port.
+
+6. Try connecting to the pod IP directly to confirm your pod is accepting connections on the correct port.
+
+7. if its still not accessible then troubleshoot with TCPdump.
+
