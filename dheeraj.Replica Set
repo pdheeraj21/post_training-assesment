@@ -1,0 +1,12 @@
+A common use-case, where we will use a daemon set instead of replica set.
+
+Replica Set will ensure that the number of pods (defined in our config file) is always running in our cluster. 
+Does not matter in which worker node they are running.
+
+Daemon Set will ensure that one copy of pod defined in our configuration will always be available on every worker node.
+
+a common use case would be the voting application (But a much larger scale) that we previosly used for example the total count of votes would be kept on each worker node.
+even if a pod dies the count at that moment remains intact in the other worker
+if we would have used a replica set that the count would be back to null.
+
+

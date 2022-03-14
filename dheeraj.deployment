@@ -1,0 +1,42 @@
+updating a container's image using deployment, making sure that there is zero downtime.
+
+Rolling update strategy
+This strategy that aims to prevent application downtime by keeping at least some instances up-and-running at any point in time while performing the updates.
+Old pods are only shutdown after new pods of the new deployment version have started-up and became ready to handle traffic.
+
+lets suppose we create a deployment as midgard:
+
+kind: deployment
+
+apiVersion: app/V1
+
+metadata:'
+
+	name: midgard
+
+spec: 
+
+	replicas: 1
+
+	template: 
+
+		#with image docker.example/midgard:1
+
+		# ...
+
+	strategy:
+
+		type: RollingUpdate
+
+		rollingUpdate:
+
+			maxSurge: 1
+
+			maxUnavailable: 0
+			
+The asgard deployment will cause the creation of one replica of the asgard:1 image.			
+
+This deployment configuration will perform version updates in the following way: 
+-It will create one pod with the new version at a time
+-wait for the pod to start-up and become ready, trigger the termination of one of the old pod.
+-then continue with the next new pod until the replica has been transitioned.
